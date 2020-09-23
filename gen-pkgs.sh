@@ -63,7 +63,7 @@ cat >> "${public_dir}/index.html" << BLOCK
 <p>
 <a href="https://gpo.zugaina.org/Overlays/src_prepare-overlay">
    <p>
-       For a GPO report
+       Go here for a GPO report
    </p>
 </a>
 BLOCK
@@ -75,11 +75,11 @@ do
     repology_pkg=$(basename "${pkg}" | sed 's/-bin//' )
     echo "Package: ${pkg}"
     cat >> "${public_dir}/index.html" << BLOCK
-<a href="https://gitlab.com/src_prepare/src_prepare-overlay/-/tree/master/${pkg}">
-    <h2>
+<h2>
+    <a href="https://gitlab.com/src_prepare/src_prepare-overlay/-/tree/master/${pkg}">
         ${pkg}
-    </h2>
-</a>
+    </a>
+</h2>
 <p>
     Available pkgs:
     $(find "${pkg}" -name "*.ebuild")
@@ -88,10 +88,9 @@ do
     Updates:
     $(euscan -q "${pkg}")
 </p>
+<br/>
 <a href="https://repology.org/project/${repology_pkg}/versions">
-    <p>
-        <img src="https://repology.org/badge/vertical-allrepos/${repology_pkg}.svg">
-    </p>
+    <img src="https://repology.org/badge/vertical-allrepos/${repology_pkg}.svg">
 </a>
 BLOCK
 done
