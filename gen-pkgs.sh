@@ -37,13 +37,19 @@ cat >> "${public_dir}/index.html" << BLOCK
 </h1>
 <ul>
     <li>
-        https://gitlab.com/src_prepare/gen-pkgs
+        <a href="https://gitlab.com/src_prepare/gen-pkgs">
+             Git repo
+        </a>
     </li>
     <li>
-        https://gitlab.com/src_prepare/gen-pkgs/-/jobs
+        <a href="https://gitlab.com/src_prepare/gen-pkgs/-/jobs">
+           Jobs
+        </a>
     </li>
     <li>
-        https://gitlab.com/src_prepare/gen-pkgs/-/pipeline_schedules
+        <a href="https://gitlab.com/src_prepare/gen-pkgs/-/pipeline_schedules">
+           Pipeline Schedules
+        </a>
     </li>
 </ul>
 <p>
@@ -51,9 +57,11 @@ cat >> "${public_dir}/index.html" << BLOCK
     <img src="https://gitlab.com/src_prepare/gen-pkgs/badges/master/pipeline.svg">
     <img src="https://gitlab.com/src_prepare/badge/-/raw/master/feed-atom-orange.svg">
 <p>
-<p>
-    For a GPO report go to: https://gpo.zugaina.org/Overlays/src_prepare-overlay
-</p>
+<a href="https://gpo.zugaina.org/Overlays/src_prepare-overlay">
+   <p>
+       For a GPO report
+   </p>
+</a>
 BLOCK
 
 
