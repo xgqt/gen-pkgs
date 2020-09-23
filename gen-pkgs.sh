@@ -54,8 +54,12 @@ cat >> "${public_dir}/index.html" << BLOCK
 </ul>
 <p>
     Curent project status:
-    <img src="https://gitlab.com/src_prepare/gen-pkgs/badges/master/pipeline.svg">
-    <img src="https://gitlab.com/src_prepare/badge/-/raw/master/feed-atom-orange.svg">
+    <a href="https://gitlab.com/src_prepare/gen-pkgs/pipelines">
+        <img src="https://gitlab.com/src_prepare/gen-pkgs/badges/master/pipeline.svg">
+    </a>
+    <a href="https://gitlab.com/src_prepare/gen-pkgs/commits/master.atom">
+        <img src="https://gitlab.com/src_prepare/badge/-/raw/master/feed-atom-orange.svg">
+    </a>
 <p>
 <a href="https://gpo.zugaina.org/Overlays/src_prepare-overlay">
    <p>
