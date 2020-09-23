@@ -46,5 +46,11 @@ do
 BLOCK
 done
 
+cat >> "${public_dir}/index.html" << BLOCK
+<p>
+    Generated on: $(date)
+</p>
+BLOCK
+
 cd "${here_dir}" || exit 1
 rm -dfr /tmp/src_prepare-overlay
