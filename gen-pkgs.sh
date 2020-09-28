@@ -97,6 +97,7 @@ BLOCK
 
 # Links to details
 echo "Generating list"
+pkgcount_l=$((0))
 cat >> "${public_dir}/index.html" << BLOCK
 <h2>
     Go to package
@@ -106,7 +107,8 @@ BLOCK
 for meta in $(find . -name metadata.xml | sort)
 do
     pkg="$(dirname "${meta}" | sed 's/.\///')"
-    echo "[L] Package: ${pkg}"
+    pkgcount_l=$((pkgcount_l+1))
+    echo "[L] Package ${pkgcount_l}: ${pkg}"
     cat >> "${public_dir}/index.html" << BLOCK
 <li>
     <a href="#${pkg}">
@@ -121,11 +123,13 @@ BLOCK
 
 # Main content
 echo "Generating report"
+pkgcount_r=$((0))
 for meta in $(find . -name metadata.xml | sort)
 do
     pkg="$(dirname "${meta}" | sed 's/.\///')"
     repology_pkg=$(basename "${pkg}" | sed 's/-bin//' )
-    echo "[R] Package: ${pkg}"
+    pkgcount_r=$((pkgcount_r+1))
+    echo "[R] Package ${pkgcount_r}: ${pkg}"
     cd "${pkg}" >/dev/null || exit 1
     cat >> "${public_dir}/index.html" << BLOCK
 <h2 id="${pkg}">
@@ -151,6 +155,9 @@ BLOCK
 done
 
 cat >> "${public_dir}/index.html" << BLOCK
+<p>
+    Total number of packages: ${pkgcount_l}
+</p>
 <p>
     Generated on: $(date)
 </p>
