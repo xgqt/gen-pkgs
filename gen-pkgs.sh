@@ -129,10 +129,11 @@ do
     pkg="$(dirname "${meta}" | sed 's/.\///')"
     repology_pkg=$(basename "${pkg}" | sed 's/-bin//' )
     pkgcount_r=$((pkgcount_r+1))
-    echo "[R] Package ${pkgcount_r}: ${pkg}"
+    echo "[R] Package ${pkgcount_r}/${pkgcount_l}: ${pkg}"
     cd "${pkg}" >/dev/null || exit 1
     cat >> "${public_dir}/index.html" << BLOCK
 <h2 id="${pkg}">
+    ${pkgcount_r}/${pkgcount_l}:
     <a href="${overlay_url}/-/tree/master/${pkg}">
         ${pkg}
     </a>
