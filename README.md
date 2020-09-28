@@ -2,8 +2,8 @@
     <a href="https://gitlab.com/src_prepare/gen-pkgs/pipelines">
         <img src="https://gitlab.com/src_prepare/gen-pkgs/badges/master/pipeline.svg">
     </a>
-    <a href="https://gitlab.com/src_prepare/artwork/commits/master.atom">
-        <img src="https://gitlab.com/src_prepare/gen-pkgs/-/raw/master/feed-atom-orange.svg">
+    <a href="https://gitlab.com/src_prepare/gen-pkgs/commits/master.atom">
+        <img src="https://gitlab.com/src_prepare/badge/-/raw/master/feed-atom-orange.svg">
     </a>
     <a href="./LICENSE">
         <img src="https://img.shields.io/badge/license-GPLv3-blue.svg">
