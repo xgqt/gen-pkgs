@@ -7,14 +7,41 @@
 trap 'exit 128' INT
 export PATH
 
+usage(){
+    cat << BLOCK
+gen-pkgs URL
+gen-pkgs - generate a html pkg report of a git overlay
+
+Origianl author: XGQT
+Copyright (c) 2020, src_prepare
+Licensed under the ISC License
+BLOCK
+}
+
+
+case ${1}
+in
+    -h | --help )
+        usage
+        exit 0
+        ;;
+    "" )
+        usage
+        exit 1
+        ;;
+esac
+
 
 here_dir="$(pwd)"
 public_dir="${here_dir}/public"
 
+overlay_url="${1}"
+overlay_dir="$(basename "${overlay_url}")"
+
 
 cd /tmp || exit 1
-git clone https://gitlab.com/src_prepare/src_prepare-overlay
-cd src_prepare-overlay || exit 1
+git clone "${overlay_url}"
+cd "${overlay_dir}" || exit 1
 
 mkdir -p "${public_dir}"
 rm "${public_dir}/index.html"
@@ -29,7 +56,7 @@ cat >> "${public_dir}/index.html" << BLOCK
     <meta name="description" content="src_prepare" />
     <meta name="keywords" content="src_prepare" />
     <meta name="author" content="src_prepare" />
-    <title>Gen-PKGs (src_prepare)</title>
+    <title>Gen-PKGs (${overlay_dir})</title>
 </head>
 <body>
 <h1>
@@ -61,23 +88,48 @@ cat >> "${public_dir}/index.html" << BLOCK
         <img src="https://gitlab.com/src_prepare/badge/-/raw/master/feed-atom-orange.svg">
     </a>
 <p>
-<a href="https://gpo.zugaina.org/Overlays/src_prepare-overlay">
+<a href="https://gpo.zugaina.org/Overlays/${overlay_dir}">
    <p>
        Go here for a GPO report
    </p>
 </a>
 BLOCK
 
+# Links to details
+echo "Generating list"
+cat >> "${public_dir}/index.html" << BLOCK
+<h2>
+    Go to package
+</h2>
+<ul>
+BLOCK
+for meta in $(find . -name metadata.xml | sort)
+do
+    pkg="$(dirname "${meta}" | sed 's/.\///')"
+    echo "[L] Package: ${pkg}"
+    cat >> "${public_dir}/index.html" << BLOCK
+<li>
+    <a href="#${pkg}">
+        ${pkg}
+    </a>
+</li>
+BLOCK
+done
+cat >> "${public_dir}/index.html" << BLOCK
+</ul>
+BLOCK
 
+# Main content
+echo "Generating report"
 for meta in $(find . -name metadata.xml | sort)
 do
     pkg="$(dirname "${meta}" | sed 's/.\///')"
     repology_pkg=$(basename "${pkg}" | sed 's/-bin//' )
-    echo "Package: ${pkg}"
+    echo "[R] Package: ${pkg}"
     cd "${pkg}" >/dev/null || exit 1
     cat >> "${public_dir}/index.html" << BLOCK
-<h2>
-    <a href="https://gitlab.com/src_prepare/src_prepare-overlay/-/tree/master/${pkg}">
+<h2 id="${pkg}">
+    <a href="${overlay_url}/-/tree/master/${pkg}">
         ${pkg}
     </a>
 </h2>
@@ -107,4 +159,4 @@ cat >> "${public_dir}/index.html" << BLOCK
 BLOCK
 
 cd "${here_dir}" || exit 1
-rm -dfr /tmp/src_prepare-overlay
+rm -dfr /tmp/"${overlay_dir}"

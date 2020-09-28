@@ -17,7 +17,7 @@ pages:
   - emaint sync -r src_prepare-overlay
   - echo '*/*::src_prepare-overlay **' > /etc/portage/package.accept_keywords
   - emerge -1nq --jobs=10 app-portage/euscan-ng
-  - sh ./gen-pkgs.sh
+  - sh ./gen-pkgs.sh https://gitlab.com/src_prepare/src_prepare-overlay
   artifacts:
     paths:
     - public
