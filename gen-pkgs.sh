@@ -139,6 +139,15 @@ do
     </a>
 </h2>
 <p>
+    About:
+    <br/>
+    $(grep -sh -m 1 DESCRIPTION ./*.ebuild | head -1)
+    <br/>
+    $(grep -sh -m 1 HOMEPAGE ./*.ebuild | head -1)
+    <br/>
+    $(grep -sh -m 1 LICENSE ./*.ebuild | head -1)
+</p>
+<p>
     Available pkgs:
     $(find . -name "*.ebuild")
 </p>
