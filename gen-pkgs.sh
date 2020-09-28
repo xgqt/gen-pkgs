@@ -74,6 +74,7 @@ do
     pkg="$(dirname "${meta}" | sed 's/.\///')"
     repology_pkg=$(basename "${pkg}" | sed 's/-bin//' )
     echo "Package: ${pkg}"
+    cd "${pkg}" >/dev/null || exit 1
     cat >> "${public_dir}/index.html" << BLOCK
 <h2>
     <a href="https://gitlab.com/src_prepare/src_prepare-overlay/-/tree/master/${pkg}">
@@ -82,7 +83,7 @@ do
 </h2>
 <p>
     Available pkgs:
-    $(find "${pkg}" -name "*.ebuild")
+    $(find . -name "*.ebuild")
 </p>
 <p>
     Updates:
@@ -92,7 +93,9 @@ do
 <a href="https://repology.org/project/${repology_pkg}/versions">
     <img src="https://repology.org/badge/vertical-allrepos/${repology_pkg}.svg">
 </a>
+$(repoman -Idx | busybox ts '<br/>' )
 BLOCK
+    cd - >/dev/null || exit 1
 done
 
 cat >> "${public_dir}/index.html" << BLOCK

@@ -12,7 +12,7 @@ pages:
   - export FEATURES="getbinpkg"
   - export MAKEOPTS="--jobs=10"
   - export USE="-perl"
-  - emerge -1nq --jobs=10 app-portage/gentoolkit app-eselect/eselect-repository dev-vcs/git
+  - emerge -1nq --jobs=10 app-portage/gentoolkit app-portage/repoman app-eselect/eselect-repository dev-vcs/git sys-apps/busybox
   - eselect repository enable src_prepare-overlay
   - emaint sync -r src_prepare-overlay
   - echo '*/*::src_prepare-overlay **' > /etc/portage/package.accept_keywords
