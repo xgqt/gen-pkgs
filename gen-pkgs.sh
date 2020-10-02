@@ -57,8 +57,10 @@ cat >> "${public_dir}/index.html" << BLOCK
     <meta name="keywords" content="src_prepare" />
     <meta name="author" content="src_prepare" />
     <title>Gen-PKGs (${overlay_dir})</title>
+    <link rel="stylesheet" href="assets/styles/main.css" />
 </head>
 <body>
+<div id="main">
 <h1>
     Package report generated each day at 01:00 AM (or otherwise by Gitlab pipeline schedule)
 </h1>
@@ -171,6 +173,7 @@ cat >> "${public_dir}/index.html" << BLOCK
 <p>
     Generated on: $(date)
 </p>
+</div>
 </body>
 </html>
 BLOCK
