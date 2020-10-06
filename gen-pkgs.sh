@@ -151,7 +151,7 @@ do
 </p>
 <p>
     Available pkgs:
-    $(find . -name "*.ebuild")
+    $(find . -name "*.ebuild" | sed 's/.\///')
 </p>
 <p>
     Updates:
