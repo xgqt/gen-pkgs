@@ -17,7 +17,7 @@
 # along with gen-pkgs.  If not, see <https://www.gnu.org/licenses/>.
 
 
-# shellcheck disable=2044
+# shellcheck disable=2044,2129
 
 
 trap 'exit 128' INT
@@ -52,11 +52,11 @@ here_dir="$(pwd)"
 public_dir="${here_dir}/public"
 
 overlay_url="${1}"
-overlay_dir="$(basename "${overlay_url}")"
+overlay_dir="$(basename "${overlay_url}" | sed 's/\.git//')"
 
 
 cd /tmp || exit 1
-git clone "${overlay_url}"
+git clone "${overlay_url}" "${overlay_dir}"
 cd "${overlay_dir}" || exit 1
 
 mkdir -p "${public_dir}"
@@ -152,7 +152,18 @@ do
     cat >> "${public_dir}/index.html" << BLOCK
 <h2 id="${pkg}">
     ${pkgcount_r}/${pkgcount_l}:
-    <a href="${overlay_url}/-/tree/master/${pkg}">
+BLOCK
+    if echo "${overlay_url}" | grep gitlab >/dev/null 2>&1
+    then
+        cat >> "${public_dir}/index.html" << BLOCK
+    <a href="$(echo "${overlay_url}" | sed 's/\.git//')/-/tree/master/${pkg}">
+BLOCK
+    else
+        cat >> "${public_dir}/index.html" << BLOCK
+    <a href="${overlay_url}">
+BLOCK
+    fi
+    cat >> "${public_dir}/index.html" << BLOCK
         ${pkg}
     </a>
 </h2>
