@@ -171,7 +171,7 @@ do
 </p>
 <p>
     Updates:
-    $(euscan -q "${pkg}")
+    $(euscan -q "${pkg}" | busybox ts '<br/>')
 </p>
 <br/>
 <a href="https://repology.org/project/${repology_pkg}/versions">
