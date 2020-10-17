@@ -158,6 +158,11 @@ BLOCK
         cat >> "${public_dir}/index.html" << BLOCK
     <a href="$(echo "${overlay_url}" | sed 's/\.git//')/-/tree/master/${pkg}">
 BLOCK
+    elif echo "${overlay_url}" | grep github >/dev/null 2>&1
+    then
+        cat >> "${public_dir}/index.html" << BLOCK
+    <a href="$(echo "${overlay_url}" | sed 's/\.git//')/tree/master/${pkg}">
+BLOCK
     else
         cat >> "${public_dir}/index.html" << BLOCK
     <a href="${overlay_url}">
