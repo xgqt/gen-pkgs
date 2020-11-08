@@ -180,6 +180,7 @@ BLOCK
     $(grep -sh -m 1 HOMEPAGE ./*.ebuild | head -1)
     <br/>
     $(grep -sh -m 1 LICENSE ./*.ebuild | head -1)
+    $(python "${here_dir}"/metadata.py | busybox ts '<br/>')
 </p>
 <p>
     Available pkgs:
