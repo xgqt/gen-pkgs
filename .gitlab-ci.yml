@@ -13,11 +13,10 @@ pages:
   - export MAKEOPTS="--jobs=10"
   - export USE="-perl"
   - emerge -1nq --jobs=10 app-portage/gentoolkit app-portage/repoman dev-vcs/git sys-apps/busybox
-  - bash ./install-overlay.sh https://gitlab.com/src_prepare/src_prepare-overlay
-  - emaint sync -r src_prepare-overlay
-  - echo '*/*::src_prepare-overlay **' > /etc/portage/package.accept_keywords
+  - sh ./install-overlay.sh "https://gitlab.com/src_prepare/src_prepare-overlay"
+  - echo '*/*::src_prepare-overlay **' >> /etc/portage/package.accept_keywords
   - emerge -1nq --jobs=10 app-portage/euscan-ng
-  - sh ./gen-pkgs.sh https://gitlab.com/src_prepare/src_prepare-overlay
+  - sh ./gen-pkgs.sh "https://gitlab.com/src_prepare/src_prepare-overlay"
   artifacts:
     paths:
     - public
