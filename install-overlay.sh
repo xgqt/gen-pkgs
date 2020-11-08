@@ -24,7 +24,7 @@ repos_home="/etc/portage/repos.conf"
 
 mkdir -p "${repos_home}"
 
-cat > "${repos_home}"/myov.conf << CONF
+cat > "${repos_home}"/"${repo}.conf" << CONF
 [${repo}]
 auto-sync = yes
 location = /var/db/repos/${repo}
