@@ -43,7 +43,7 @@ before_script:
 pages:
   stage: deploy
   script:
-    - sh ./gen-pkgs.sh "https://gitlab.com/src_prepare/src_prepare-overlay"
+    - sh ./gen-pkgs.sh -n "/var/db/repos/src_prepare-overlay"
   artifacts:
     paths:
       - public

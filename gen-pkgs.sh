@@ -35,11 +35,19 @@ BLOCK
 }
 
 
+# Whether to clone the overlay or use a installed one
+# default: clone
+clone=1
+
+
 case ${1}
 in
     -h | --help )
         usage
         exit 0
+        ;;
+    -n | --no-clone )
+        clone=0
         ;;
     "" )
         usage
@@ -51,14 +59,22 @@ esac
 here_dir="$(pwd)"
 public_dir="${here_dir}/public"
 
-overlay_url="${1}"
-overlay_dir="$(basename "${overlay_url}" | sed 's/\.git//')"
+if [ ${clone} -ge 1 ]
+then
+    overlay_url="${1}"
+    overlay_dir="$(basename "${overlay_url}" | sed 's/\.git//')"
+    cd /tmp || exit 1
+    git clone "${overlay_url}" "${overlay_dir}"
+else
+    # In this case ${2} is the overlay dir
+    # TODO: Probe this arg in a better way (...maybe just port this script to python)
+    overlay_url="$(cd "${2}" && git config --get remote.origin.url 2>/dev/null)"
+    overlay_dir="${2}"
+fi
 
 
 # Prepare
 
-cd /tmp || exit 1
-git clone "${overlay_url}" "${overlay_dir}"
 cd "${overlay_dir}" || exit 1
 
 mkdir -p "${public_dir}"
@@ -77,7 +93,7 @@ cat >> "${public_dir}/index.html" << BLOCK
     <meta name="description" content="src_prepare" />
     <meta name="keywords" content="src_prepare" />
     <meta name="author" content="src_prepare" />
-    <title>Gen-PKGs (${overlay_dir})</title>
+    <title>Gen-PKGs ($(basename "${overlay_dir}"))</title>
     <link rel="stylesheet" href="assets/styles/main.css" />
 </head>
 <body>
@@ -236,5 +252,8 @@ BLOCK
 
 # Finish
 
-cd "${here_dir}" || exit 1
-rm -dfr /tmp/"${overlay_dir}"
+if [ "${clone}" -ge 1 ]
+then
+    cd "${here_dir}" || exit 1
+    rm -dfr /tmp/"${overlay_dir}"
+fi
