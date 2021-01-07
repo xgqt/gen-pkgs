@@ -17,14 +17,14 @@
 # along with gen-pkgs.  If not, see <https://www.gnu.org/licenses/>.
 
 
-repo_url=${1}
+repo_url="${1}"
 repo=$(basename "${repo_url}" | sed 's/.git//')
 repos_home="/etc/portage/repos.conf"
 
 
 mkdir -p "${repos_home}"
 
-cat > "${repos_home}"/"${repo}.conf" << CONF
+cat > "${repos_home}/${repo}.conf" << CONF
 [${repo}]
 auto-sync = yes
 location = /var/db/repos/${repo}
