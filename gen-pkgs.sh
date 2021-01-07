@@ -16,12 +16,12 @@
 # You should have received a copy of the GNU General Public License
 # along with gen-pkgs.  If not, see <https://www.gnu.org/licenses/>.
 
-
 # shellcheck disable=2044,2129
 
 
 trap 'exit 128' INT
 export PATH
+
 
 usage(){
     cat << BLOCK
@@ -29,8 +29,8 @@ gen-pkgs URL
 gen-pkgs - generate a html pkg report of a git overlay
 
 Origianl author: XGQT
-Copyright (c) 2020, src_prepare
-Licensed under the ISC License
+Copyright (c) 2020-2021, src_prepare
+Licensed under the GNU GPL v3 License
 BLOCK
 }
 
@@ -55,12 +55,17 @@ overlay_url="${1}"
 overlay_dir="$(basename "${overlay_url}" | sed 's/\.git//')"
 
 
+# Prepare
+
 cd /tmp || exit 1
 git clone "${overlay_url}" "${overlay_dir}"
 cd "${overlay_dir}" || exit 1
 
 mkdir -p "${public_dir}"
 rm "${public_dir}/index.html"
+
+
+# Header
 
 cat >> "${public_dir}/index.html" << BLOCK
 <!DOCTYPE html>
@@ -113,7 +118,9 @@ cat >> "${public_dir}/index.html" << BLOCK
 </a>
 BLOCK
 
+
 # Links to details
+
 echo "Generating list"
 pkgcount_l=$((0))
 cat >> "${public_dir}/index.html" << BLOCK
@@ -139,7 +146,9 @@ cat >> "${public_dir}/index.html" << BLOCK
 </ul>
 BLOCK
 
+
 # Main content
+
 echo "Generating report"
 pkgcount_r=$((0))
 for meta in $(find . -name metadata.xml | sort)
@@ -173,7 +182,9 @@ BLOCK
     </a>
 </h2>
 <p>
-    About:
+    <b>
+        About:
+    </b>
     <br/>
     $(grep -sh -m 1 DESCRIPTION ./*.ebuild | head -1)
     <br/>
@@ -183,11 +194,15 @@ BLOCK
     $(python "${here_dir}"/metadata.py | busybox ts '<br/>')
 </p>
 <p>
-    Available pkgs:
+    <b>
+        Available pkgs:
+    </b>
     $(find . -name "*.ebuild" | sed 's/.\///')
 </p>
 <p>
-    Updates:
+    <b>
+        Updates:
+    </b>
     $(euscan -q "${pkg}" | busybox ts '<br/>')
 </p>
 <br/>
@@ -199,17 +214,27 @@ BLOCK
     cd - >/dev/null || exit 1
 done
 
+
+# Footer
+
 cat >> "${public_dir}/index.html" << BLOCK
 <p>
-    Total number of packages: ${pkgcount_l}
+    <b>
+        Total number of packages: ${pkgcount_l}
+    </b>
 </p>
 <p>
-    Generated on: $(date)
+    <b>
+        Generated on: $(date)
+    </b>
 </p>
 </div>
 </body>
 </html>
 BLOCK
+
+
+# Finish
 
 cd "${here_dir}" || exit 1
 rm -dfr /tmp/"${overlay_dir}"
