@@ -215,12 +215,7 @@ BLOCK
     </b>
     $(find . -name "*.ebuild" | sed 's/.\///')
 </p>
-<p>
-    <b>
-        Updates:
-    </b>
-    $(euscan -q "${pkg}" | busybox ts '<br/>')
-</p>
+$(sh "${here_dir}"/updates.sh "${pkg}")
 <br/>
 <a href="https://repology.org/project/${repology_pkg}/versions">
     <img src="https://repology.org/badge/vertical-allrepos/${repology_pkg}.svg">
