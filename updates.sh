@@ -17,8 +17,14 @@
 # along with gen-pkgs.  If not, see <https://www.gnu.org/licenses/>.
 
 
+trap 'exit 128' INT
+export PATH
+
+
 updates="$(euscan -q "${1}")"
 
+
+mkdir -p ./public
 
 if [ -n "${updates}" ]
 then
@@ -30,4 +36,5 @@ then
      $(echo "${updates}" | busybox ts '<br/>')
 </p>
 EOF
+    echo "${updates}" >> ./public/updates.txt
 fi
