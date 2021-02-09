@@ -21,10 +21,12 @@ trap 'exit 128' INT
 export PATH
 
 
+binroot="$(dirname "${0}")"
+
 updates="$(euscan -q "${1}")"
 
 
-mkdir -p ./public
+mkdir -p "${binroot}/public"
 
 if [ -n "${updates}" ]
 then
@@ -36,5 +38,5 @@ then
      $(echo "${updates}" | busybox ts '<br/>')
 </p>
 EOF
-    echo "${updates}" >> ./public/updates.txt
+    echo "${updates}" >> "${binroot}/public/updates.txt"
 fi
