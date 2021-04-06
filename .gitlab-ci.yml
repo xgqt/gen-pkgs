@@ -16,28 +16,10 @@
 # along with gen-pkgs.  If not, see <https://www.gnu.org/licenses/>.
 
 
-image: gentoo/stage3:amd64
-
+image: registry.gitlab.com/src_prepare/gentoo-repoman-container:src_prepare
 
 variables:
-  FEATURES: "getbinpkg"
   GIT_SUBMODULE_STRATEGY: recursive
-  MAKEOPTS: "--jobs=10"
-  PORTAGE_BINHOST: "https://xgqt.gitlab.io/gentoo-mini-mirror/binpkgs"
-  USE: "-perl"
-
-
-before_script:
-  - mkdir -p /var/cache/binpkgs
-  - mkdir -p /var/cache/distfiles
-  - mkdir -p /var/db/repos/gentoo
-  - mkdir -p /etc/portage/repos.conf
-  - emerge-webrsync
-  - emerge -1nq --jobs=10 app-portage/gentoolkit app-portage/repoman dev-vcs/git sys-apps/busybox
-  - sh ./install-overlay.sh "https://gitlab.com/src_prepare/src_prepare-overlay"
-  - echo '*/*::src_prepare-overlay **' >> /etc/portage/package.accept_keywords
-  - emerge -1nq --jobs=10 app-portage/euscan-ng
-
 
 pages:
   stage: deploy
@@ -48,3 +30,4 @@ pages:
       - public
   only:
     - master
+
