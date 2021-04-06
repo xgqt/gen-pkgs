@@ -16,7 +16,7 @@
 # along with gen-pkgs.  If not, see <https://www.gnu.org/licenses/>.
 
 
-image: gentoo/stage3-amd64:latest
+image: gentoo/stage3:amd64
 
 
 variables:
