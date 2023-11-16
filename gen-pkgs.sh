@@ -206,7 +206,7 @@ BLOCK
     $(grep -sh -m 1 HOMEPAGE ./*.ebuild | head -1)
     <br/>
     $(grep -sh -m 1 LICENSE ./*.ebuild | head -1)
-    $(python "${here_dir}"/metadata.py | busybox ts '<br/>')
+    $(python "${here_dir}"/metadata.py | sed '/$/ a<br/>')
 </p>
 <p>
     <b>
@@ -219,7 +219,7 @@ $(sh "${here_dir}"/updates.sh "${pkg}")
 <a href="https://repology.org/project/${repology_pkg}/versions">
     <img src="https://repology.org/badge/vertical-allrepos/${repology_pkg}.svg">
 </a>
-$(repoman -Idx | busybox ts '<br/>' )
+$(pkgcheck scan | sed '/$/ a<br/>' )
 BLOCK
     cd - >/dev/null || exit 1
 done

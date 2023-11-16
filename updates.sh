@@ -34,7 +34,7 @@ then
     <b>
         Updates:
     </b>
-     $(echo "${updates}" | busybox ts '<br/>')
+     $(echo "${updates}" | sed '/$/ a<br/>')
 </p>
 EOF
     echo "${updates}" >> "${binroot}/public/updates.txt"
